@@ -1,0 +1,31 @@
+#===============================================================================
+# Vanilla - Service File
+#===============================================================================
+
+[Unit]
+Description=Spin Up Vanilla
+After=docker.service
+
+[Service]
+TimeoutStartSec=0
+
+ExecStartPre=/usr/bin/echo "========================"
+ExecStartPre=/usr/bin/echo "  New Service Starting"
+ExecStartPre=/usr/bin/echo "========================"
+
+# Display this service's IP addresses.
+EnvironmentFile=/etc/environment
+ExecStartPre=/usr/bin/echo "Public IP Address: ${COREOS_PUBLIC_IPV4}"
+ExecStartPre=/usr/bin/echo "Private IP Address: ${COREOS_PRIVATE_IPV4}"
+
+
+# Pull The Service's Docker Container.
+ExecStartPre=/usr/bin/docker build --tag="vanilla_image" /home/core/.
+
+ExecStart=/usr/bin/docker run --name vanilla -p 80:80 \
+   vanilla_image /bin/bash -c \
+  'coffee vanilla.coffee'
+
+
+[Install]
+WantedBy=multi-user.target
