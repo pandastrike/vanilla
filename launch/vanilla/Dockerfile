@@ -10,7 +10,7 @@ RUN pacman-db-upgrade
 RUN pacman -S --noconfirm jre7-openjdk-headless wget vim tmux git nodejs
 
 # Install Vanilla
-#RUN git root@vanilla.pandastrike.com:orwell.git
+#RUN git clone ssh://root@vanilla.pandastrike.com:3000/repos/orwell.git vanilla
 RUN git clone https://github.com/PandaPup/vanilla.git vanilla
 
 # Install CoffeeScript
