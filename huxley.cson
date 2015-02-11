@@ -53,6 +53,11 @@ tags: [
   }
 ]
 
+#=============================
+# Githook Server Data
+#=============================
+# This array holds the name of services that get restart when you push to the hook server.
+restart: ["vanilla"]
 
 #=============================
 # Template Descriptions
@@ -68,9 +73,10 @@ formation_service_templates:
 # Services prefixed with "pc_" are templates stored in the panda-cluster library.
 
 # Template values are specified as members of the unit's object.
-# Specifiying "null" as the object's value will deliver the servie file "as is".
-service_units:
+# Specifiying "null" as the object's value will deliver the service file "as is".
+service_templates:
   vanilla: null
+  
   pc_elasticsearch:
     output_filename: "elasticsearch.service"
     after: ["docker.service"]
