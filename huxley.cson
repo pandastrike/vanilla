@@ -78,7 +78,6 @@ service_templates:
   vanilla: null
 
   pc_elasticsearch:
-    output_filename: "elasticsearch.service"
     after: ["docker.service"]
     container_name: "elasticsearch"
     image_name: "pandastrike/pc_elasticsearch"
@@ -87,7 +86,6 @@ service_templates:
     type: "A"
 
   pc_kibana:
-    output_filename: "kibana.service"
     after: ["docker.service", "elasticsearch.service"]
     container_name: "kibana"
     image_name: "pandastrike/pc_kibana"
