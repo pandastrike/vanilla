@@ -1,5 +1,0 @@
-# This file is used to specify which directories Huxley should look for units to launch.
-# All other directories will be ignored.
-units: [
-  "vanilla"
-]
