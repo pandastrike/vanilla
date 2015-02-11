@@ -76,7 +76,7 @@ formation_service_templates:
 # Specifiying "null" as the object's value will deliver the service file "as is".
 service_templates:
   vanilla: null
-  
+
   pc_elasticsearch:
     output_filename: "elasticsearch.service"
     after: ["docker.service"]
@@ -91,6 +91,6 @@ service_templates:
     after: ["docker.service", "elasticsearch.service"]
     container_name: "kibana"
     image_name: "pandastrike/pc_kibana"
-    hostname: "kibana.huxley.pandastrike.com"
+    hostname: "kibana.vanilla.pandastrike.com"
     port: "80"
     elasticsearch_url: "elasticsearch.vanilla.cluster:2001"
