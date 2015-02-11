@@ -20,7 +20,7 @@ ExecStartPre=/usr/bin/echo "Private IP Address: ${COREOS_PRIVATE_IPV4}"
 
 
 # Pull The Service's Docker Container.
-ExecStartPre=/usr/bin/docker build --tag="vanilla_image" /home/core/vanilla/.
+ExecStartPre=/usr/bin/docker build --tag="vanilla_image" /home/core/launch/vanilla/.
 
 ExecStart=/usr/bin/docker run --name vanilla -p 3001:80 \
    vanilla_image /bin/bash -c \
