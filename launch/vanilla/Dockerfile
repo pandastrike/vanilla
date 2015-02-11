@@ -11,7 +11,7 @@ RUN pacman -S --noconfirm jre7-openjdk-headless wget vim tmux git nodejs
 
 # Install Vanilla
 #RUN git root@vanilla.pandastrike.com:orwell.git
-RUN git https://github.com/PandaPup/vanilla.git
+RUN git clone https://github.com/PandaPup/vanilla.git vanilla
 
 # Install CoffeeScript
 RUN npm install -g coffee-script

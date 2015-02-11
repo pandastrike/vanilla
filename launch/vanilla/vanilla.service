@@ -24,7 +24,7 @@ ExecStartPre=/usr/bin/docker build --tag="vanilla_image" /home/core/launch/vanil
 
 ExecStart=/usr/bin/docker run --name vanilla -p 3001:80 \
    vanilla_image /bin/bash -c \
-  'coffee vanilla.coffee'
+  'cd vanilla && coffee vanilla.coffee'
 
 
 [Install]
