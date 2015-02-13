@@ -82,7 +82,7 @@ service_templates:
     container_name: "elasticsearch"
     image_name: "pandastrike/pc_elasticsearch"
     hostname: "elasticsearch.vanilla.cluster"
-    port: "2001"
+    port: "2010"
     type: "A"
 
   pc_kibana:
