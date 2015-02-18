@@ -3,56 +3,6 @@
 #=========================
 # This file is used to specify your project's cluster and what Huxley launches into it.
 
-# The public SSH keys of every person you'd like to have access to the cluster.
-public_keys: [
-  "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDa0+r/A9pOHLd8r4KFmHwSC9uS4hciAo/87BXTbf4U3Ff4khZHlfJfRIWsCTF82jLoEvwG3ybpB3KOfxJdSU9/4LNnQWkSoUIYYBpcbjyOb1fI+x0hoSfYwGhYsPrgcEPyxaN03nTmdodTtRzASnPD/CiGqbhi7layqUp6EARdKCAbciaI76P8iQndllCJZnRa3UG7izVZK6vbiz+ZFhKrIicjpvEGAU3jp1Yd40Igp2g5uodzh5lxREV+4cSQ+ctgDvutiA50Fr2KkJz2NRTTlDHTaZ+VW8rw64qLiBWBYZbcox3Go6Yuu59t5wwao/YY627ENFmHOE3cziamtXeQjmsUBp5mE/am6XjchjQGfK4/edm7UQr4lhZ+v7OSl5Cb0hg5tUAntzlkxFHnn5BOyLvMSm2tPmgAmKYx4ucy3zX9U4jKy+5kanCnxISsV4ybYyU70NWPflvYVQ88Yv9tWg2m1KRcl5Htz/Ku7aYbWy7bAnfwaGGl55EtjShm7jqGi64yREIE6c6dPrL9e1Kl6fnRRkR94dhs+ZfpbG/oAyKBLTbH/kjqjHYOTJ7llfd6UQIHWZNlBZP6HbdjbI5JK/lCFZNR4xoXHK3dxlssjLd5uhE06CT9xBC4aKiCb+4UOqCI+m6IV5wFjb786T548eF0xeufafgfESJrSwjXRQ== robb@pandstrike.com (common)",
-  "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAp7CmR7tnXZ3gKbjW/YviHsS+w5+zR4AdF6Y0tSP0Izvyb2rIKKkI2XxyoWFN+/Cxp293ofCFeuJNS5KZBuouvam3+opyo9ALS4E0/gLEn5N1upaqm0M4sxLV5oCunEZA8uBqVGdgezvJh2ApW/FHUDinkwPe+5q9wrtZDyO+1ac1Z0Q2wi+AM2TR33Qao5ucfPS89SIN21cZBWyGn03pPmuGE7D+fnT/MaLuqCmAYDJC5t62DKZx+p7nCx6Yj8JFv+2lJoO6JYdbHwRXvYZldzKBiN232ddoykHVPVi5NSS/QTBUIYonbuVhWhkK7ZehaqWQeiemvQtHON+/cg61Qw== david@interlincx.com",
-  "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRfZ2r+U/qramOoPQQE/asSEi0BPx4gt3HTIrZHvMz7FS3AFCXlwLr1+b0DGPzmrbEVdoaxKOXDvw88wX0BzYWCTPRkfh48o7DGuRnuF5lpipC95StBGSYPwms7UL71jWm4eMFllDFRV+Ev3hNREDmh+5KcM6EfQ31yor+Bakc/sz5ZiYW4sZl3n717JOFtGi5UFvMlpT9691Ao8DoX+9eBuad/AO9k+cF+93ynXJ+Fn17baYvDcwAe32U/GHT+cNmbGmJDVMCkN6gme3ilAKbt1gp7YFs9uw+OijFuYObZRi7k0JyAoUx8c3h/Xck5H6A3cLS8AedUCJLiSRmtNRr peterlongnguyen@gmail.com",
-  "ssh-dss AAAAB3NzaC1kc3MAAAEBAKGFMb0r1tAmiAbzIOTrZMJ9xU2HVhOy0VExNTHNmC0BPHbKfvnN+MqwmJAusfEBoQYdXv7UzYEkuvkdNLUmzHDzXsDw92HNphtE14H4Tti2tjeUoEQ6hBrxlfi6MNtAK1zG6u+A1B1nHhElURFvGzgug1uC3RXm7o9eoFpCJl/RR8G2VXRZoZ/AABa1a76TuZd7Zm0l+8NFnZUZZJWdp9HMu9HwGB35tNJgo79z1W8LiP1n6u4ZJ4DIme7zCPu2J5oBXl4eB4SSVIhbFLvnm6BqdDsNvUNLM06fsGhsygYW11LepArq0kZt4NmSr3DExoF/kRUXVeue1gsEZHeTXXkAAAAVAOgddXsrZT7OPxOgrK0CzeUuQM6lAAABAQCBE3ABxkCmXsXgqVpEFihyjBIFp3b1UcBOem+DyxKtSiR+lqKtDxWZgBS0JG9ll9P+Ggo7g9iq3jKQ4UG39sceI37+vLSw12s/p3RQD4XO8ktrviQUqdl9QXP+siCPhdOmjAZhlCt2IlY8va58hbBRFtUqKcWRTGMV0HsD3kNw9iMOMUHvpUdrZ6os+SpU1F7AzqMu83Emhthd960HtmV90dY+0PSqmgvwoovzfuB2cjNZ3fM8xEsHp6g4s1IaGaLqI67SOgD3fQgti7/9Zmm91++3pfiZSXehiaSOcJSOtvkvYklpg0rh53Dlp9/G8MQcZvABvjeZyFFqJxNuz3FyAAABADwIIGM+0KFi+aDrZBoAVG6w8gKjIH7hwqwImbT5vmiYSUSuATmmdFPNtzPRNwx3Yoa3TTNUVM5O+jOjCCEpCfhw49u8qO1K07AYAO9PVLUZHjRXDQDSCchNSZ/74Mr20V9LndyghEpEdQiMkTuj4uPHIVafvfJ1mChRfZGPSTY38EUx0ULSIjvUTQvzlqOQoWZWsz00qnRn84Tr9BA5+fCZSWkruji7bqai1KsSRlSg0dkIpFOXtZXKX4I3h5fVQK+IWGJGhn3WEb4n8nkGRWwk/OrAdRciGRu3ZKfcPUnDsQ1ixrkSVwVLZqTiujaZH9SsGXuCblzHahqb++8aDLo=",
-  "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDecO3D96rQMrU10Su5HuB3Bes0o+RfQPOuhVdZA5wGG9Cpo8pdAIkUaMmSBq6RRmUKxhjStcTvqp1qaPSfGZlc7nx6HQaPMtN8jp051tC94+PIVoFevyz0lDlUR8fzzcUGMy9bFOkUrqucOMObjD0yOBBh/IXSgLpJGQBFrzUX2+dWv5YYhfZpY+F+LGFMH53f2RCVBVnWvBvM8Hk3zCD5UfZsby9vydsARvpYK8jNCdqh8HwjJ/UyX2UF/4dG9dKmv776amyHoEwt1tmNCMpW+NF2tXNQfRFWOLmS2Dt5Stk4FDSlk81Dz+tbFZ3MmQJfPnU+2ibzr9Pl8xi82lPV real.david.harper@gmail.com",
-  "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAuq/3NdgLezywdsumgrQR8aBleZ6Qti/mDJm0yLvJ2kPx1lzmsojgV8EfV8Lu5MBh6gc7pUSF4S+i6HY+vetM4EOY3nYv9+hmDbW48oTpsBue49cgZrsWvZzn4h4a61rU+zWQRq4lX8E79Y2KoT+enB1uthP1033seVxtiTjIw3aFrI6dC7+vE+vEXtHINGEBfKuUsRKbH5QmJylrhi5WR28415zEYy0vXWCCzIlgfcrJ9OLKfLUJl2BwbCFO4FWL8rLozN5BM9b7D3W4jclCG1LCQqARkG5Z9bRId9+HlZW19grslE296wzaT8LRVvqFzWD+hrwEtLW5FIFIqT8irw== lance@pandastrike.com"
-]
-
-#=============================
-# Cluster Description
-#=============================
-stack_name: "Vanilla"     # Required
-key_pair: "CoreOS-Test"   # Required
-channel: "stable"
-
-hostname: "vanilla.pandastrike.com"
-private_hosted_zone: "vanilla.cluster"
-
-# **WARNING** - These affect the cost of your cluster.  See AWS Documentation for pricing.
-instance_type: "m1.medium"
-cluster_size: 3
-spot_price: 0.009
-#=============================
-
-# Optional Tag Descriptions
-tags: [
-  {
-    Key: "Name"
-    Value: "Vanilla"
-  }
-  {
-    Key: "customer"
-    Value: "pandastrike"
-  }
-  {
-    Key: "environment"
-    Value: "test"
-  }
-  {
-    Key: "project"
-    Value: "huxley"
-  }
-  {
-    Key: "role"
-    Value: "coreos"
-  }
-]
-
 #=============================
 # Githook Server Data
 #=============================
@@ -62,15 +12,8 @@ restart: ["vanilla"]
 #=============================
 # Template Descriptions
 #=============================
-# Template configurations of services that are needed *during* cluster formation.  These are limited
-# to services that change properties of the instances themselves.
-formation_service_templates:
-  format_ephemeral: "default"
-  var_lib_docker: "default"
-
-# This section configures services that are deployed *after* cluster formation and the machines are
-# ready (most services).
-# Services prefixed with "pc_" are templates stored in the panda-cluster library.
+# This section configures services that are deployed into the cluster. Services prefixed with
+# "pc_" are templates stored in the panda-cluster library.
 
 # Template values are specified as members of the unit's object.
 # Specifiying "null" as the object's value will deliver the service file "as is".
