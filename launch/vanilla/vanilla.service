@@ -25,6 +25,10 @@ ExecStartPre=/usr/bin/curl -XPOST kick.dessert.cluster:2000 -d '\
   "port": "3100",  \
   "type": "A"'
 
+# Delete any old containers with this image.
+ExecStartPre=-/usr/bin/docker kill vanilla
+ExecStartPre=-/usr/bin/docker rm vanilla
+
 # Pull The Service's Docker Container.
 ExecStartPre=/usr/bin/bash -c "if [ -d /home/core/launch/vanilla ]; then /usr/bin/rm -rf /home/core/launch/vanilla; fi"
 ExecStartPre=/usr/bin/echo "Directory Checked"
