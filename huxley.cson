@@ -4,12 +4,6 @@
 # This file is used to specify your project's cluster and what Huxley launches into it.
 
 #=============================
-# Githook Server Data
-#=============================
-# This array holds the name of services that get restart when you push to the hook server.
-restart: ["vanilla"]
-
-#=============================
 # Template Descriptions
 #=============================
 # This section configures services that are deployed into the cluster. Services prefixed with
