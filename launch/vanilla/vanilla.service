@@ -18,11 +18,18 @@ EnvironmentFile=/etc/environment
 ExecStartPre=/usr/bin/echo "Public IP Address: ${COREOS_PUBLIC_IPV4}"
 ExecStartPre=/usr/bin/echo "Private IP Address: ${COREOS_PRIVATE_IPV4}"
 
+# Register this service with Sidekick Server.
+ExecStartPre=/usr/bin/curl -XPOST {{{kick_address}}} -d '\
+  "hostname": "vanilla.huxley.pandastrike.com",      \
+  "ip_address": "${COREOS_PUBLIC_IPV4}",  \
+  "port": "3337",  \
+  "type": "A"'
 
 # Pull The Service's Docker Container.
-ExecStartPre=/usr/bin/docker build --tag="vanilla_image" /home/core/launch/vanilla/.
+ExecStartPre=/usr/bin/git clone git://hook.huxley.cluster:2001/repos/vanilla.git vanilla
+ExecStartPre=/usr/bin/docker build --tag="vanilla_image" /home/core/vanilla/.
 
-ExecStart=/usr/bin/docker run --name vanilla -p 3001:80 \
+ExecStart=/usr/bin/docker run --name vanilla -p 3337:80 \
    vanilla_image /bin/bash -c \
   'cd vanilla && coffee vanilla.coffee'
 
