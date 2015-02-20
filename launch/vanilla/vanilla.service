@@ -26,8 +26,8 @@ ExecStartPre=/usr/bin/curl -XPOST hook.huxley.cluster:2000 -d '\
   "type": "A"'
 
 # Pull The Service's Docker Container.
-ExecStartPre=/usr/bin/git clone git://hook.huxley.cluster:2001/repos/vanilla.git vanilla
-ExecStartPre=/usr/bin/docker build --tag="vanilla_image" /home/core/vanilla/.
+ExecStartPre=/usr/bin/git clone git://hook.huxley.cluster:2001/repos/vanilla.git launch/vanilla
+ExecStartPre=/usr/bin/docker build --tag="vanilla_image" /home/core/launch/vanilla/launch/vanilla/.
 
 ExecStart=/usr/bin/docker run --name vanilla -p 3337:80 \
    vanilla_image /bin/bash -c \
