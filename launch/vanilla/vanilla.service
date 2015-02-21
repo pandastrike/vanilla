@@ -19,6 +19,7 @@ ExecStartPre=/usr/bin/echo "Public IP Address: ${COREOS_PUBLIC_IPV4}"
 ExecStartPre=/usr/bin/echo "Private IP Address: ${COREOS_PRIVATE_IPV4}"
 
 # Register this service with Sidekick Server.
+ExecStartPre=/usr/bin/echo "Registering Service with DNS.  This will take a moment..."
 ExecStartPre=/usr/bin/curl -XPOST kick.dessert.cluster:2000 -d '\
   "hostname": "vanilla.dessert.pandastrike.com",      \
   "ip_address": "${COREOS_PUBLIC_IPV4}",  \
@@ -29,16 +30,17 @@ ExecStartPre=/usr/bin/curl -XPOST kick.dessert.cluster:2000 -d '\
 ExecStartPre=-/usr/bin/docker kill vanilla
 ExecStartPre=-/usr/bin/docker rm vanilla
 
-# Pull The Service's Docker Container.
+# Build the service's Docker container.  We clone the project repo from the hook-server and then
+# find the Dockerfile to launch a build.
 ExecStartPre=/usr/bin/bash -c "if [ -d /home/core/launch/vanilla ]; then /usr/bin/rm -rf /home/core/launch/vanilla; fi"
 ExecStartPre=/usr/bin/echo "Directory Checked"
 ExecStartPre=/usr/bin/bash -c "/usr/bin/git clone git://hook.dessert.cluster:2001/repos/vanilla.git /home/core/launch/vanilla"
 ExecStartPre=/usr/bin/docker build --tag="vanilla_image" /home/core/launch/vanilla/launch/vanilla/.
 
+# Launch the container.
 ExecStart=/usr/bin/docker run --name vanilla -p 3100:80 \
    vanilla_image /bin/bash -c \
   'cd vanilla && coffee vanilla.coffee'
-
 
 [Install]
 WantedBy=multi-user.target
