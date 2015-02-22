@@ -23,7 +23,7 @@ ExecStartPre=/usr/bin/echo "Registering Service with DNS.  This will take a mome
 ExecStartPre=/usr/bin/curl -XPOST kick.flavor.cluster:2000 -d '\
   "hostname": "vanilla.flavor.pandastrike.com",      \
   "ip_address": "${COREOS_PUBLIC_IPV4}",  \
-  "port": "3100",  \
+  "port": "3010",  \
   "type": "A"'
 
 # Delete any old containers with this image.
@@ -38,7 +38,7 @@ ExecStartPre=/usr/bin/bash -c "/usr/bin/git clone git://hook.flavor.cluster:2001
 ExecStartPre=/usr/bin/docker build --tag="vanilla_image" /home/core/launch/vanilla/launch/vanilla/.
 
 # Launch the container.
-ExecStart=/usr/bin/docker run --name vanilla -p 3100:80 \
+ExecStart=/usr/bin/docker run --name vanilla -p 3010:80 \
    vanilla_image /bin/bash -c \
   'cd vanilla && coffee vanilla.coffee'
 
