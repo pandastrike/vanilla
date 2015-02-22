@@ -1,9 +1,10 @@
 #===============================================================================
-# Vanilla - Service File
+# Vanilla Example - Server Service File
 #===============================================================================
 
 [Unit]
 Description=Spin Up Vanilla
+# List any services that must be online before or wait untl after this service is activated.
 After=docker.service
 
 [Service]
