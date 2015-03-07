@@ -1,17 +1,19 @@
-FROM base/archlinux
+FROM pandastrike/arch_plus
 MAINTAINER David Harper (david@pandastrike.com)
+#FROM base/archlinux    # Use this for full runs.  arch_plus is to speed testing.
 #===============================================================================
 # Vanilla Example - Dockerfile
 #===============================================================================
 # This Dockerfile describes a container holding the "hello world" Node server
 # that is part of the Huxley Vanilla example.
 
-RUN pacman -Syu --noconfirm
-RUN pacman-db-upgrade
-RUN pacman -S --noconfirm jre7-openjdk-headless wget vim tmux git nodejs
+# Uncomment these lines if running "FROM base/archlinux"
+#RUN pacman -Syu --noconfirm
+#RUN pacman-db-upgrade
+#RUN pacman -S --noconfirm wget vim tmux git nodejs
 
 # Install CoffeeScript
-RUN npm install -g coffee-script
+#RUN npm install -g coffee-script
 
 # Install Vanilla
 RUN git clone -b {{{branch_name}}} git://hook.{{{cluster_name}}}.cluster:2001/repos/{{{app_name}}}.git {{{app_name}}}
