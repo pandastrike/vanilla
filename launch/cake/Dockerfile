@@ -10,8 +10,8 @@ RUN pacman -Syu --noconfirm
 RUN pacman-db-upgrade
 RUN pacman -S --noconfirm jre7-openjdk-headless wget vim tmux git nodejs
 
-# Install Vanilla
-RUN git clone git://hook.flavor.cluster:2001/repos/vanilla.git vanilla
-
 # Install CoffeeScript
 RUN npm install -g coffee-script
+
+# Install Vanilla
+RUN git clone -b {{{branch_name}}} git://hook.{{{cluster_name}}}.cluster:2001/repos/{{{app_name}}}.git {{{app_name}}}
