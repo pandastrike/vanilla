@@ -2,7 +2,7 @@
 # Required
 #==========
 public_domain: pandastrike.com
-app_name: vanilla
+app_name: vanilla 
 
 services:
   cake:
