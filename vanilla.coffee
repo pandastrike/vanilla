@@ -1,9 +1,23 @@
+#===============================================================================
+# Vanilla Example - Node Server
+#===============================================================================
+# This is a simple "hello world" Node server.
+
+#==============
+# Modules
+#==============
 http = require "http"
 
-server = (request, response) ->
+#====================
+# Server Definition
+#====================
+vanilla = (request, response) ->
   response.writeHead(200)
   response.write("Hello World.")
   response.end()
 
-http.createServer(server).listen(80)
-console.log "\nVanilla is online."
+
+# Launch Server
+http.createServer(vanilla).listen(80, () ->
+  console.log "\nVanilla is online."
+)

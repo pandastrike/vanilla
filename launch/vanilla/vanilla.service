@@ -33,8 +33,8 @@ ExecStartPre=-/usr/bin/docker rm vanilla
 
 # Build the service's Docker container.  We clone the project repo from the hook-server and then
 # find the Dockerfile to launch a build.
+ExecStartPre=/usr/bin/echo "Building Docker Image - If it's not cached yet, this could take a moment."
 ExecStartPre=/usr/bin/bash -c "if [ -d /home/core/launch/vanilla ]; then /usr/bin/rm -rf /home/core/launch/vanilla; fi"
-ExecStartPre=/usr/bin/echo "Directory Checked"
 ExecStartPre=/usr/bin/bash -c "/usr/bin/git clone git://hook.flavor.cluster:2001/repos/vanilla.git /home/core/launch/vanilla"
 ExecStartPre=/usr/bin/docker build --tag="vanilla_image" /home/core/launch/vanilla/launch/vanilla/.
 
