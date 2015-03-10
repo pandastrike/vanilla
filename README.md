@@ -72,7 +72,7 @@ cd vanilla
 huxley init
 ```
 ***What's this does***
-Huxley's deployment model depends on a very simple convention.  We require the directory `launch/` to be placed into the root of your project.  Every service you wish to deploy lives in a sub-directory of `launch`.  Huxley also keeps track of persistent configuration information for you in the manifest file `huxley.yaml`.  `init` places both of these in your project.  Inside `huxley.yaml`, edit `app_name` to match the name of your repository.  
+Huxley's deployment model depends on a very simple convention.  We require the directory `launch/` to be placed into the root of your project.  Every service you wish to deploy lives in a sub-directory of `launch`.  Huxley also keeps track of persistent configuration information for you in the manifest file `huxley.yaml`.  `init` places both of these in your project.  Inside `huxley.yaml`, `app_name` stores the name of your repository.  Don't edit this.  It's for Huxley's reference.
 
 ### Step 5 - Install a Project Mixin
 Huxley provides mixins, which are templates to deploy your code on a Huxley server.  Vanilla is a "Hello World" NodeJS project, so let's use the mixin `node`.
