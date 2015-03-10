@@ -1,10 +1,2 @@
-#==========
-# Required
-#==========
 public_domain: pandastrike.com
 app_name: vanilla
-
-#==========
-# Optional
-#==========
-spot_price: 0.009
