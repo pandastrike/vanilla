@@ -1,9 +1,2 @@
 public_domain: pandastrike.com
 app_name: vanilla
-services:
-  node:
-    port: 80
-    host: 127.0.0.1
-remotes:
-  - name: sparkles
-    id: LS2EenAJrIu8lLYQnLJaLw
