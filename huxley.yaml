@@ -1,0 +1,12 @@
+app_name: vanilla
+public_domain: pandastrike.com
+cluster_name: sparkles
+region: us-west-1
+spot_price: 0.009
+remotes:
+  - name: sparkles
+    id: gw9SazQ8Z3aRQVjVKvawlw
+services:
+  node:
+    port: 80
+    host: 127.0.0.1
