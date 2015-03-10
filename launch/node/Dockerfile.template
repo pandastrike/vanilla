@@ -7,10 +7,10 @@ MAINTAINER Peter Nguyen (peter@pandastrike.com)
 
 RUN pacman -Syu --noconfirm
 RUN pacman-db-upgrade
-RUN pacman -S --noconfirm jre7-openjdk-headless wget vim tmux git nodejs 
+RUN pacman -S --noconfirm jre7-openjdk-headless wget vim tmux git nodejs
 
 # Install Node
-RUN git clone git://hook.{{{cluster_name}}}.cluster:2001/repos/{{{app_name}}}.git node
+RUN git clone git://hook.{{{cluster_name}}}.cluster:2001/repos/{{{app_name}}} node
 
 # Install CoffeeScript
 RUN npm install -g coffee-script

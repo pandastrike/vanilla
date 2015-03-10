@@ -5,7 +5,7 @@ region: us-west-1
 spot_price: 0.009
 remotes:
   - name: sparkles
-    id: gw9SazQ8Z3aRQVjVKvawlw
+    id: LHlstT9tYmBXaF1DGvh67w
 services:
   node:
     port: 80
