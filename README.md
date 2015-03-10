@@ -37,8 +37,15 @@ spot_price: 0.009
 ```
 > **WARNING:** ***NEVER PLACE THIS IN YOUR PROJECT'S REPOSITORY***!!
 
+### Step 1 - Install Huxley CLI
+Install Huxley via npm
+```shell
+npm install -g huxley-cli
+```
 
-### Step 1 - Create A Cluster
+This gives you the executable `huxley`, which you will be using for the remaining steps.
+
+### Step 2 - Create A Cluster
 The CLI lets you spin up Huxley clusters.
 
 ```shell
@@ -46,14 +53,14 @@ huxley cluster create [name]
 ```
 If you don't provide a name, a random one will be selected for you.  The command returns immediately with a cluster ID Huxley uses to find it in the future.  However, your cluster will not be fully configured and ready for several minutes.
 
-### Step 2 - Clone Vanilla to Your Local Machine
+### Step 3 - Clone Vanilla to Your Local Machine
 Vanilla is a "hello world" stand-in for any Node project you've written and wish to deploy.
 
 ```shell
 git clone https://github.com/pandastrike/vanilla vanilla
 ```
 
-### Step 3 - Intialize Your Project for Deployment
+### Step 4 - Intialize Your Project for Deployment
 Initialize your project for Huxley by issuing the following command in the root of your project:
 ```shell
 huxley init
@@ -61,7 +68,7 @@ huxley init
 ***What's this does***
 Huxley's deployment model depends on a very simple convention.  We require the directory `launch/` to be placed into the root of your project.  Every service you wish to deploy lives in a sub-directory of `launch`.  Huxley also keeps track of persistent configuration information for you in the manifest file `huxley.yaml`.  `init` places both of these in your project.  Inside `huxley.yaml`, edit `app_name` to match the name of your repository.  
 
-### Step 4 - Install a Project Mixin
+### Step 5 - Install a Project Mixin
 Huxley provides mixins, which are templates to deploy your code on a Huxley server.  Vanilla is a "Hello World" NodeJS project, so let's use the mixin `node`.
 
 ```shell
@@ -70,7 +77,7 @@ huxley mixin node
 
 Check out the `launch/` directory to see you have a sub-directory `node/` complete with templates ready to run on a Huxley cluster!  All you need to do is make sure that your project's `package.json` file has a valid `npm start` script and the template will find it.
 
-### Step 5 - Install Githook On Hook Server
+### Step 6 - Install Githook On Hook Server
 A githook is an arbitrary script that gets triggered in response to a git command.  Githooks are not transfered by normal git commands, so we rely on a special Huxley command.  Target the cluster you plan to use.
 
 ```shell
@@ -80,7 +87,7 @@ huxley remote add [cluster-name]
 The githook has been installed and you now have a git alias ready, which you can examine with `git remote -v`.
 
 
-### Step 6 - Deploy
+### Step 7 - Deploy
 This is the fun part.  Commit any edits you've made and deploy...  via `git push`  Woohooo!
 ```shell
 git add -A
