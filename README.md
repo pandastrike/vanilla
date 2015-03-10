@@ -14,9 +14,10 @@ So, lets set some context! The root configuration for huxley is stored in a dotf
 - The `aws` stanza contains your AWS credentials.  You will not be able to use Huxley without it.
 - `public_keys` grants every listed user access to a cluster created by your CLI.  It is not required, but make sure you have
 - `spot_price` is a single variable.  It asks AWS to use Spot Instances to build your cluster, which affords you a 90% savings and is ideal for testing.
-- public_domain: This is a publicly available domain that you own and have associated with your AWS account.  Clusters will be placed at sub-domains of this root.
+- `public_domain` This is a publicly available domain that you own and have associated with your AWS account.  Clusters will be placed at sub-domains of this root.
 
 ### ~/.huxley
+> **WARNING:** ***NEVER PLACE THIS IN YOUR PROJECT'S REPOSITORY***!!
 ```yaml
 huxley:
   url: "http://huxley.pandastrike.com"    # Specify the API server location
