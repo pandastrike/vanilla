@@ -18,6 +18,7 @@ So, lets set some context! The root configuration for huxley is stored in a dotf
 
 ### ~/.huxley
 > **WARNING:** ***NEVER PLACE THIS IN YOUR PROJECT'S REPOSITORY***!!
+
 ```yaml
 huxley:
   url: "http://huxley.pandastrike.com"    # Specify the API server location
@@ -38,6 +39,7 @@ spot_price: 0.009
 public_domain: acme.com
 
 ```
+
 > **WARNING:** ***NEVER PLACE THIS IN YOUR PROJECT'S REPOSITORY***!!
 
 ### Step 1 - Install Huxley CLI
