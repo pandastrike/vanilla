@@ -1,8 +1,0 @@
-public_domain: pandastrike.com
-app_name: vanilla
-services:
-  cake:
-    cluster_name: fearless-panda
-    port: 3010
-spot_price: 0.009
-remotes: []
