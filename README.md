@@ -68,7 +68,7 @@ Huxley provides mixins, which are templates to deploy your code on a Huxley serv
 huxley mixin node
 ```
 
-Check out the `launch/` directory to see you have a sub-directory `node/` complete with templates ready to run on a Huxley cluster!
+Check out the `launch/` directory to see you have a sub-directory `node/` complete with templates ready to run on a Huxley cluster!  All you need to do is make sure that your project's `package.json` file has a valid `npm start` script and the template will find it.
 
 ### Step 5 - Install Githook On Hook Server
 A githook is an arbitrary script that gets triggered in response to a git command.  Githooks are not transfered by normal git commands, so we rely on a special Huxley command.  Target the cluster you plan to use.
