@@ -18,7 +18,7 @@ So, lets set some context! The root configuration for huxley is stored in a dotf
 ### ~/.huxley
 ```yaml
 huxley:
-  url: "https://huxley.pandastrike.com"    # Specify the API server location
+  url: "http://huxley.pandastrike.com"    # Specify the API server location
 
 aws:
   id: MyAWSIdentity
