@@ -1,16 +1,5 @@
-#==========
-# Required
-#==========
-
 public_domain: pandastrike.com
 app_name: vanilla 
 
-services:
-  cake:
-    port: 3010
 
 
-#==========
-# Optional
-#==========
-spot_price: 0.009
