@@ -11,9 +11,10 @@ Huxley consists of two parts.  There is a command-line interface (CLI) where you
 So, lets set some context! The root configuration for huxley is stored in a dotfile located in your $HOME directory.  It stores some sensitive information, so never store this in your project's repository.
 
 - The `huxley` stanza provides the CLI with an address where it can find a Huxley API server.  If you don't have a running API server, you can spin up your own by following [these instructions][1] or by using ours.  We have one running at `huxley.pandastrike.com`.
-- The `aws` stanza contains your AWS credentials.  It is not required, but you will not be able to create clusters without it.
+- The `aws` stanza contains your AWS credentials.  You will not be able to use Huxley without it.
 - `public_keys` grants every listed user access to a cluster created by your CLI.  It is not required, but make sure you have
 - `spot_price` is a single variable.  It asks AWS to use Spot Instances to build your cluster, which affords you a 90% savings and is ideal for testing.
+- public_domain: This is a publicly available domain that you own and have associated with your AWS account.  Clusters will be placed at sub-domains of this root.
 
 ### ~/.huxley
 ```yaml
@@ -33,6 +34,7 @@ public_keys:
   - Grants cluster access to listed users
 
 spot_price: 0.009
+public_domain: acme.com
 
 ```
 > **WARNING:** ***NEVER PLACE THIS IN YOUR PROJECT'S REPOSITORY***!!
@@ -46,12 +48,12 @@ npm install -g huxley-cli
 This gives you the executable `huxley`, which you will be using for the remaining steps.
 
 ### Step 2 - Create A Cluster
-The CLI lets you spin up Huxley clusters.
+The CLI lets you spin up Huxley clusters.  Skip this step if you already have a cluster online.
 
 ```shell
 huxley cluster create [name]
 ```
-If you don't provide a name, a random one will be selected for you.  The command returns immediately with a cluster ID Huxley uses to find it in the future.  However, your cluster will not be fully configured and ready for several minutes.
+If you don't provide a name, a random one will be selected for you.  The command returns immediately with a cluster ID Huxley uses to find it in the future.  However, your cluster will not be fully configured and ready for several minutes.  At the moment, there is not a method in place to detect when formation is complete, but that command is comming soon.  For now, give it 10 minutes and go get some coffee.
 
 ### Step 3 - Clone Vanilla to Your Local Machine
 Vanilla is a "hello world" stand-in for any Node project you've written and wish to deploy.
@@ -63,6 +65,7 @@ git clone https://github.com/pandastrike/vanilla vanilla
 ### Step 4 - Intialize Your Project for Deployment
 Initialize your project for Huxley by issuing the following command in the root of your project:
 ```shell
+cd vanilla
 huxley init
 ```
 ***What's this does***
