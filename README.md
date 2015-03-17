@@ -10,7 +10,7 @@ Huxley consists of two parts.  There is a command-line interface (CLI) where you
 
 So, lets set some context! The root configuration for huxley is stored in a dotfile located in your $HOME directory.  It stores some sensitive information, so never store this in your project's repository.
 
-- The `huxley` stanza provides the CLI with an address where it can find a Huxley API server.  If you don't have a running API server, you can spin up your own by following [these instructions][1] or by using ours.  We have one running at `huxley.pandastrike.com`.
+- The `huxley` stanza provides the CLI with an address where it can find a Huxley API server.  If you don't have a running API server, you can spin up your own by following [these instructions][1] or by using ours.  We have one running at `https://huxley.pandastrike.com`.  Please note the use of HTTPS.  Connections on port 80 will be rejected.
 - The `aws` stanza contains your AWS credentials.  You will not be able to use Huxley without it.
 - `public_keys` grants every listed user access to a cluster created by your CLI.  It is not required, but make sure you have
 - `spot_price` is a single variable.  It asks AWS to use Spot Instances to build your cluster, which affords you a 90% savings and is ideal for testing.
@@ -21,7 +21,7 @@ So, lets set some context! The root configuration for huxley is stored in a dotf
 
 ```yaml
 huxley:
-  url: "http://huxley.pandastrike.com"    # Specify the API server location
+  url: "https://huxley.pandastrike.com"    # Specify the API server location
 
 aws:
   id: MyAWSIdentity
