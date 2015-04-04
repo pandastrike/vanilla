@@ -6,7 +6,7 @@ This repository houses a simple Node server that only replies with "Hello World"
 # Deployment Example
 
 ## Step 0 - Setup Your Root Configuration
-Place this file into a dotfile located in your $HOME directory.  
+Place this into a dotfile located in your $HOME directory.  
 ### //  ~/.huxley
 > **WARNING:** ***NEVER PLACE THIS IN YOUR PROJECT'S REPOSITORY***!!
 
