@@ -54,9 +54,9 @@ Creating a profile allows Huxley to track the resources that belong to you.  If 
 ## Step 3 - Create A Cluster
 Skip this step if you already have a cluster online.
 ```
-$ huxley cluster create [name]
+$ huxley cluster create fearless-panda
 > Please enter a spot price: 0.009
-> Please enter the cluster's public domain: acme.com
+> Please enter the cluster's public domain: pandastrike.com
 > Please enter a single descriptive tag: (huxley)
 
 Cluster creation In Progress.
@@ -71,17 +71,32 @@ The CLI lets you spin up a whole cluster with a simple command.  If you don't pr
 
 Afterwards, the command returns immediately with a cluster ID Huxley uses to find it in the future.  However, it will take time to fully configure your cluster.
 
+```
+$ huxley cluster describe fearless-panda
+status: starting
+name: fearless-panda
+public_domain: pandastrike.com
+region: us-west-1
+deployments:
+remotes:
+command_id: cluster create fearless-panda
+detail: CloudFromation stack in progress.
+```
+Let's take a look at the cluster we've just created.  `cluster describe` provides detailed information about the cluster's status.  You can see it's still spinning up.  It even gives you some information about what it's doing to configure the cluster for you.  You can keep calling `cluster describe` to see updated information about your cluster.  But that's inefficient.  Fortunately, Huxley gives you a way to deal with that.
+
 ## Step 4 - Monitor Long-Running Commands
 ```
 $ huxley pending ls
-Request [cluster create fearless-panda] has status [creating].
+Request [cluster create fearless-panda] has status [creating] -- 32482178a
 ```
 
 ```
 $ huxley pending wait
 Done.
 ```  
-`ls` gives you a list of the long-running commands that are pending.  You could keep using `ls` to see if the command is finished, but cluster creation takes between 10 and 15 minutes.
+The cluster is still being formed, therefore the command that created it has a *pending* state.  Huxley tracks long-running commands for you to give you more control when managing them.
+
+`pending ls` gives you a list of the long-running commands that are pending.  You could keep using `ls` to see if the command is finished, but cluster creation takes between 10 and 15 minutes.
 
 Fortunately, you can ask Huxley to tell you when your cluster is ready with `pending wait`.  The CLI will block until all pending commands have completed.  Once that happens it prints `Done.` and exits.  Time to go get coffee.
 
@@ -143,9 +158,9 @@ Once it detects you pushing an update to the cluster, the githook triggers a cas
 - You can add multiple clusters to your remote.  Imagine adding clusters named `dev` and `production`.  Alter your deployment environment just by altering your push command.
 - You can specify any branch of your project.  Have something to test in a development branch? Just name it when you push and see it online.
 
-It can take a couple minutes for a fresh Docker container to build, but subsequent deploys go much faster. Monitoring of pending deployments is imminent.  Also, Make sure you have SSH agent-forwarding enabled to the cluster's domain.  Deployment will fail without forwarding.
+Watch as your app is deployed.  You will be returned to the command-line when your deployment is ready.  Non-blocking deployment (like how the `cluster create` command behaves) is imminent.  Also, Make sure you have SSH agent-forwarding enabled to the cluster's domain.  Deployment will fail without forwarding.
 
-Congratulations!!  You've made your first deploy, Huxley-Style!!
+Visit `http://[service_name].[cluster_name].[public_domain]:[service_port]` to see `Hello World.`  Congratulations!!  You've made your first deploy, Huxley-Style!!
 
 ## Shutdown
 ```shell
