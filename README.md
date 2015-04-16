@@ -69,7 +69,7 @@ The CLI lets you spin up a whole cluster with a simple command.  If you don't pr
 - `public_domain` This is a publicly available domain that you own and have associated with your AWS account.  Clusters will be placed at sub-domains of this root.
 - `tag`: This is a tag that appears in AWS to help identify your deployment.  
 
-Afterwards, the command returns immediately with a cluster ID Huxley uses to find it in the future.  However, it will take time to fully configure your cluster.
+Afterwards, the command returns immediately with a cluster ID that Huxley uses to find it in the future.  However, it will take time to fully configure your cluster.
 
 ```
 $ huxley cluster describe fearless-panda
@@ -82,7 +82,7 @@ remotes:
 command_id: cluster create fearless-panda
 detail: CloudFromation stack in progress.
 ```
-Let's take a look at the cluster we've just created.  `cluster describe` provides detailed information about the cluster's status.  You can see it's still spinning up.  It even gives you some information about what it's doing to configure the cluster for you.  You can keep calling `cluster describe` to see updated information about your cluster.  But that's inefficient.  Fortunately, Huxley gives you a way to deal with that.
+Let's take a look at the cluster we've just created.  `cluster describe` provides detailed information about the cluster's status.  You can see it's still spinning up.  It even gives you some information about what it's doing to configure the cluster for you.  Let's look at how we can automate formation monitoring.
 
 ## Step 4 - Monitor Long-Running Commands
 ```
@@ -94,7 +94,7 @@ Request [cluster create fearless-panda] has status [creating] -- 32482178a
 $ huxley pending wait
 Done.
 ```  
-The cluster is still being formed, therefore the command that created it has a *pending* state.  Huxley tracks long-running commands for you to give you more control when managing them.
+The cluster is still being formed, therefore the command that created it has a *pending* state.  Huxley tracks long-running commands to help you manage them.
 
 `pending ls` gives you a list of the long-running commands that are pending.  You could keep using `ls` to see if the command is finished, but cluster creation takes between 10 and 15 minutes.
 
@@ -152,22 +152,33 @@ $ git add -A
 $ git commit -m "My awesome edits"
 $ git push fearless-panda master
 ```
+```
+$ huxley pending ls
+Request [git push fearless-panda master] has status [starting] -- 9a84fdb75
+```  
+```
+$ huxley pending wait
+Done.
+```
 This is the fun part.  You are able to deploy with nothing more than `git push`  Woohooo!
 
-Once it detects you pushing an update to the cluster, the githook triggers a cascade of events that result in a deployment of your application.  Note that Huxley affords you great flexibility:
+Once it detects you pushing an update to the cluster, the githook triggers a cascade of events that result in a deployment of your application.  Depending on your application, deployment may take several minutes, but the `git push` returns quickly (There is 10-15 second blocking pause the first time you push a repo to a cluster).  As it processes your deployment, the cluster also registers the `git push` with the Huxley API server as a pending command you can track.  The cluster monitors the mixins you've specified, and when they are ready it will resolve this pending command.
+
+This feature gives you the power to optionally block on your deployment with `huxley pending wait`.  As soon as it returns `Done.`, your application is ready.  Visit `http://[service_name].[cluster_name].[public_domain]:[service_port]` to see `Hello World.`  Congratulations!!  You've made your first deploy, Huxley-Style!!
+
+
+### Deployment Notes:
+Huxley affords you great flexibility...
 - You can add multiple clusters to your remote.  Imagine adding clusters named `dev` and `production`.  Alter your deployment environment just by altering your push command.
 - You can specify any branch of your project.  Have something to test in a development branch? Just name it when you push and see it online.
 
-Watch as your app is deployed.  You will be returned to the command-line when your deployment is ready.  Non-blocking deployment (like how the `cluster create` command behaves) is imminent.  Also, Make sure you have SSH agent-forwarding enabled to the cluster's domain.  Deployment will fail without forwarding.
-
-Visit `http://[service_name].[cluster_name].[public_domain]:[service_port]` to see `Hello World.`  Congratulations!!  You've made your first deploy, Huxley-Style!!
 
 ## Shutdown
 ```shell
 $ huxley cluster delete fearless-panda
 Cluster deletion In Progress.
 ```
-Huxley can delete your cluster resources too.  Note, it will take a couple minutes for the shutdown to complete.
+Huxley can delete your cluster resources too.  The command returns quickly, but note that it will take a couple minutes for the shutdown to complete.  Tracking cluster deletion is not currently available, but is planned for the future.  Not only does this command terminate cluster instances, it cleans up the private hosted zone established for the cluster, eg. `fearless-panda.cluster`.
 
 [1]:https://github.com/pandastrike/huxley
 [mixins]:https://github.com/pandastrike/huxley/wiki/Huxley-Mixins
