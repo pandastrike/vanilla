@@ -55,19 +55,32 @@ Creating a profile allows Huxley to track the resources that belong to you.  If 
 Skip this step if you already have a cluster online.
 ```
 $ huxley cluster create fearless-panda
-> Please enter a spot price: 0.009
-> Please enter the cluster's public domain: pandastrike.com
-> Please enter a single descriptive tag: (huxley)
+This utility will walk you through configuring a Huxley cluster.
+It pulls from your local config or tries to guess sane defaults.
+
+See https://github.com/pandastrike/huxley/wiki for definitive documentation
+
+Press ^C at any time to quit.
+> Cluster Size [3-12]: (3)
+> EC2 Instance Type: (m1.medium)
+> Instance Virtualizaiton Type: (pv)
+> AWS Region: (us-west-1)
+> Availability Zone: (us-west-1c)
+> Default SSH Key: (CoreOS-Test)
+> CoreOS Channel: (stable)
+> Spot Bid [or 0 for on-demand]: (0) 0.009
+> Public Domain: pandastrike.com
+> Descriptive Tag: (huxley)
 
 Cluster creation In Progress.
 Name: fearless-panda
 Cluster ID: U-QM9gCcF7OjTbQttGegcQ
 ```
 
-The CLI lets you spin up a whole cluster with a simple command.  If you don't provide a name, a random one will be selected for you.  Huxley prompts you for several configuration details:
-- `spot_price` is a single variable.  It asks AWS to use Spot Instances to build your cluster, which affords you a 90% savings and is ideal for testing.
-- `public_domain` This is a publicly available domain that you own and have associated with your AWS account.  Clusters will be placed at sub-domains of this root.
-- `tag`: This is a tag that appears in AWS to help identify your deployment.  
+The CLI lets you spin up a whole cluster with a simple command.  If you don't provide a name, a random one will be selected for you.  Huxley prompts you for several configuration details, but it tries to provide sane defaults.  Pressing "Enter" will accept the default value.  See the wiki for more details on these settings, but for now let's just focus on:
+- **Spot Bid:** This asks AWS to use Spot Instances to build your cluster, which can yield up to a 90% savings.  Spot Instances are ideal for testing.
+- **Public domain:** This is a publicly available domain that you own and have associated with your AWS account.  Clusters will be placed at sub-domains of this root.
+- **Descriptive Tag:** This is a tag that appears in AWS to help identify your deployment.  
 
 Afterwards, the command returns immediately with a cluster ID that Huxley uses to find it in the future.  However, it will take time to fully configure your cluster.
 
@@ -75,14 +88,14 @@ Afterwards, the command returns immediately with a cluster ID that Huxley uses t
 $ huxley cluster describe fearless-panda
 status: starting
 name: fearless-panda
-public_domain: pandastrike.com
+domain: pandastrike.com
+type: m1.medium
 region: us-west-1
+availability_zone: us-west-1c
 deployments:
 remotes:
-command_id: cluster create fearless-panda
-detail: CloudFromation stack in progress.
 ```
-Let's take a look at the cluster we've just created.  `cluster describe` provides detailed information about the cluster's status.  You can see it's still spinning up.  It even gives you some information about what it's doing to configure the cluster for you.  Let's look at how we can automate formation monitoring.
+Let's take a look at the cluster we've just created.  `cluster describe` provides detailed information about the cluster's status.  You can see it's still spinning up. Let's look at how we can automate formation monitoring.
 
 ## Step 4 - Monitor Long-Running Commands
 ```
@@ -112,7 +125,7 @@ Vanilla is a *Hello World* stand-in for any Node project you've written and wish
 ```shell
 $ cd vanilla
 $ huxley init
-Huxley deployment initalized.
+Huxley deployment initialized.
 ```
 Huxley's deployment model depends on a very simple convention.  We require the directory `launch/` to be placed into the root of your project.  Every service you wish to deploy lives in a sub-directory of `launch`.  Huxley also keeps track of persistent configuration information for you in the manifest file `huxley.yaml`.  `init` places both of these in your project.
 
@@ -120,17 +133,20 @@ Huxley's deployment model depends on a very simple convention.  We require the d
 ```shell
 $ huxley mixin add node
 What is the mixin name? (vanilla)
-On what port is the mixin listening?
-What is the application start command? (npm start)
+What external port on the container is exposed? 3030
+What internal port in the container maps to the above? (80) 8080
+What is the mixin start command? (npm start)
+
+Added a "node" mixin named "vanilla" to your repository.
 ```
 Huxley provides [mixins][mixins], which are launch descriptions for a component of your app.  Vanilla is a Node.js project, so we selected the `node` mixin.
 
 This will again prompt you for configuration information:
-- `service_name`: We are using a Node type mixin, but you can name it whatever you like.  It defaults to the name of your repository.
-- `port`: The port the service responds to.  For Huxley clusters
- - Ports exposed to the public Internet are 3001 to 3999, inclusive. (Hook server is on 3000)
- - Ports exposed to only the cluster are 2001 to 2999, inclusive. (Kick server is on 2000)
-- `start_command`: This is the command used to start the service.  Since this is a Node project, it defaults to `npm start`.
+- **Name:** We are using a Node type mixin, but you can name it whatever you like.  It defaults to the name of your repository.
+- **Ports:** Huxley launches your app inside a Linux container.  When it asks for the external port, it's asking for the port the outside world can use to reach your app.  The internal port is whatever that maps to inside the container. For Huxley clusters
+ - External Ports exposed to the public Internet are 3002 to 3999, inclusive.
+ - External Ports exposed to only the cluster are 2002 to 2999, inclusive.
+- **Start Command:** This is the command used to start the service.  Since this is a Node project, it defaults to `npm start`.
 
 Check out the `launch/` directory to see you have a sub-directory named after the service name you chose.  The sub-directory is complete with templates ready to run on a Huxley cluster.  All you need to do is make sure that your project's `package.json` file has a valid `npm start` script and the template will find it.
 
@@ -141,7 +157,7 @@ Githook installed on cluster fearless-panda
 ID: mdnkiosMd1GPR8bC7pnlBg
 ```
 
-A githook is an arbitrary script that gets triggered in response to a git command.  Githooks are not transferred by normal git commands, so we rely on a special Huxley command and target the cluster of interest.
+A githook is an arbitrary script that gets triggered in response to a git command.  Githooks are not transferred by normal git commands, so we rely on a special Huxley command and target the cluster of interest.  It will about 15 seconds for this command to return, but for now it is a blocking command.
 
 Additionally, Huxley sets up a git alias for your cluster, which you can examine with `git remote -v`.
 
@@ -162,9 +178,13 @@ Done.
 ```
 This is the fun part.  You are able to deploy with nothing more than `git push`  Woohooo!
 
-Once it detects you pushing an update to the cluster, the githook triggers a cascade of events that result in a deployment of your application.  Depending on your application, deployment may take several minutes, but the `git push` returns quickly (There is 10-15 second blocking pause the first time you push a repo to a cluster).  As it processes your deployment, the cluster also registers the `git push` with the Huxley API server as a pending command you can track.  The cluster monitors the mixins you've specified, and when they are ready it will resolve this pending command.
+The first time you push, you will be asked to authorize the connection.  This is normal, but you have to type "yes", otherwise the connection will be denied.
 
-This feature gives you the power to optionally block on your deployment with `huxley pending wait`.  As soon as it returns `Done.`, your application is ready.  Visit `http://[service_name].[cluster_name].[public_domain]:[service_port]` to see `Hello World.`  Congratulations!!  You've made your first deploy, Huxley-Style!!
+Once it detects you pushing an update to the cluster, the githook triggers a cascade of events that result in a deployment of your application.  Depending on your application, deployment may take several minutes, but the `git push` returns quickly.  As it processes your deployment, the cluster also registers the `git push` with the Huxley API server as a pending command you can track.  The cluster monitors the mixins you've specified, and when they are ready it will resolve this pending command.
+
+This feature gives you the power to optionally block on your deployment with `huxley pending wait`.  As soon as it returns `Done.`, your application is ready.  Visit `http://[service name].[cluster name].[public domain]:[external port]` to see `Hello World.`  For example, ours would be "http://vanilla.fearless-panda.pandastrike.com:3030"
+
+Congratulations!!  You've made your first deploy, Huxley-Style!!
 
 
 ### Deployment Notes:
@@ -173,12 +193,84 @@ Huxley affords you great flexibility...
 - You can specify any branch of your project.  Have something to test in a development branch? Just name it when you push and see it online.
 
 
+## Privileged Data
+**huxley.yaml**
+```yaml
+app_name: vanilla
+files:
+  - src/secrets.txt
+  - env/dev
+```
+**.gitignore**
+```
+*.log
+node_modules/
+secrets.txt
+env/dev
+```
+**src/secrets.txt**
+```
+This is a secret.
+```
+#### evn/dev
+**secret-a.txt**
+```
+This is a secret in a secret directory.
+```
+**secret-b.txt**
+```
+This is a secret in a secret directory with the above secret.
+```
+#### The New src/server.coffee
+```coffee
+#===============================================================================
+# Vanilla Example - Node Server
+#===============================================================================
+# This is a simple "hello world" Node server, but now we access secret data."
+{join} = require "path"
+{readFileSync} = require "fs"
+http = require "http"
+
+vanilla = (request, response) ->
+  response.writeHead(200)
+  response.write("Hello World.\n")
+  response.write readFileSync join __dirname, "./secrets.txt"
+  response.write readFileSync join __dirname, "../env/dev/secret-a.txt"
+  response.write readFileSync join __dirname, "../env/dev/secret-b.txt"
+  response.end()
+
+# Launch Server
+http.createServer(vanilla).listen 8080, () ->
+  console.log "\nVanilla is online."
+```
+
+
+Huxley primarily uses git to deploy your project.  However, there are some things that you don't want to store in your repo, (eg API keys, massive dictionary, etc).  Huxley offers you a way to include this in your deployment.
+
+By placing references to the files and/or directories that you wish to include in the `files` field of `huxley.yaml`, Huxley will make sure they make it into the deployment.  References work just like `gitignore` references do.  You may recursively include all files within a directory by naming it in the `files` field.
+
+In our example, `secrets.txt` and the directory `env/prod` are gitignored *and* mentioned to Huxley.  Huxley transports these files to the cluster when it sets up a remote, but the command is identical.
+
+Run this:
+```
+$ huxley remote add fearless-panda
+```
+Then commit the changes to the server code.  `.gitignore` will protect the files from being included.
+
+
+Now, when you deploy, you'll see data that was deployed without being a part of your git repo.
+
 ## Shutdown
 ```shell
 $ huxley cluster delete fearless-panda
 Cluster deletion In Progress.
 ```
-Huxley can delete your cluster resources too.  The command returns quickly, but note that it will take a couple minutes for the shutdown to complete.  Tracking cluster deletion is not currently available, but is planned for the future.  Not only does this command terminate cluster instances, it cleans up the private hosted zone established for the cluster, eg. `fearless-panda.cluster`.
+```
+$ huxley pending ls
+Request [cluster delete fearless-panda] has status [creating] -- 35482279a
+```
+
+Huxley can delete your cluster resources too.  The command returns quickly, but note that it will take a couple minutes for the shutdown to complete.  Once again, Huxley has you covered.  Deletion shows up as a pending command that you can block on with `pending wait`.  Not only does this command terminate cluster instances, it cleans up the private hosted zone established for the cluster, eg. `fearless-panda.cluster`.
 
 [1]:https://github.com/pandastrike/huxley
 [mixins]:https://github.com/pandastrike/huxley/wiki/Huxley-Mixins
